@@ -19,23 +19,28 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       checkboxInput("p1", "u by lambda1", TRUE),
+      conditionalPanel(
+        condition = "input.p1",
+        sliderInput("lambda2",
+                    "lambda2: ",
+                    min = 0.0,
+                    max = 0.5,
+                    value = 0.00,
+                    step = 0.02,
+                    animate = animationOptions(interval = 1000, loop = FALSE)
+        )
+      ),
       checkboxInput("p2", "u by lambda2", FALSE),
-      sliderInput("lambda1",
-                  "lambda1: ",
-                  min = 0.0,
-                  max = 5.0,
-                  value = 0,
-                  step = 0.5,
-                  animate = animationOptions(interval = 1000, loop = FALSE)
-                  ),
-      sliderInput("lambda2",
-                  "lambda2: ",
-                  min = 0.0,
-                  max = 0.5,
-                  value = 0.00,
-                  step = 0.02,
-                  animate = animationOptions(interval = 1000, loop = FALSE)
-      )
+      conditionalPanel(
+        condition = "input.p2",
+        sliderInput("lambda1","lambda1: ",
+                    min = 0.0,
+                    max = 5.0,
+                    value = 0,
+                    step = 0.5,
+                    animate = animationOptions(interval = 1000, loop = FALSE)
+                    )
+        )
     ),
     # Show a plot of the generated distribution
     mainPanel(
